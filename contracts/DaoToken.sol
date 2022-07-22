@@ -51,7 +51,7 @@ contract DaoToken is
         );
         if (isOpenForAll) {
             proposalIsForAllMembers[_proposalId] = true;
-        } else{
+        } else {
             proposalHasRoleAssigned[_proposalId] = true;
             rolesPeerProposal[_proposalId] = role;
         }
@@ -70,7 +70,10 @@ contract DaoToken is
             "Error: this proposal doesnt has a roled assigned nor is open to all members"
         );
 
-        require(hasRole(rolesPeerProposal[proposalId] , msg.sender));
+        require(
+            hasRole(rolesPeerProposal[proposalId], msg.sender),
+            "Error: This proposal doesnt match your current role"
+        );
         return super._castVote(proposalId, account, support, reason, params);
     }
 
