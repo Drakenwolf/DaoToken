@@ -23,6 +23,12 @@ contract DaoToken is
     ///@notice that this mapping will track if a proposal is open to all members
     mapping(uint256 => bool) public proposalIsForAllMembers;
 
+    event assingRoleToProposalEvent(
+        bool isOpenForAll,
+        bytes32 role,
+        uint256 _proposalId
+    );
+
     constructor(IVotes _token)
         Governor("DaoToken")
         GovernorVotes(_token)
@@ -55,6 +61,8 @@ contract DaoToken is
             proposalHasRoleAssigned[_proposalId] = true;
             rolesPeerProposal[_proposalId] = role;
         }
+
+        emit assingRoleToProposalEvent(isOpenForAll, role, _proposalId);
     }
 
     function _castVote(
